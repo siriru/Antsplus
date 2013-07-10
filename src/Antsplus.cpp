@@ -20,9 +20,12 @@ int main()
 {
     RenderWindow window(VideoMode(800,600,32), "Ants");
     Colony colony;
+    Colony colony2;
     Queen q(Vector2f(100,100), 1, 6, 1);
     Queen q2(Vector2f(250,100), 1, 6, 1);
     colony = q.createColony(30, 20, 10);
+    q.setPosition(Vector2f(500,500));
+    colony2 = q.createColony(50, 20, 20);
     /*vector<Ant*> tabAnt(0);
     for(int i=0;i<10;i++) {
     	tabAnt.push_back(new Ant(Vector2f(100+10*i,100+i*2), 0, 3, 1));
@@ -52,6 +55,7 @@ int main()
 
         window.clear();
         window.draw(colony.getShape());
+        window.draw(colony2.getShape());
         window.draw(q.getShape());
         window.draw(q2.getShape());
 

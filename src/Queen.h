@@ -13,6 +13,8 @@
 
 class Colony;
 class Queen: public Ant {
+private:
+	Colony* colony;
 public:
 	Queen();
 	Queen(sf::Vector2f p, int a, int s, int sp);
@@ -20,6 +22,9 @@ public:
 	virtual ~Queen();
 
 	Colony createColony(int width, int height, int capacity);
+
+	Colony* getColony();
+	void setColony(Colony* colony);
 };
 
 #endif /* QUEEN_H_ */
