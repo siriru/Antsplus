@@ -6,20 +6,20 @@
  */
 
 #include "Queen.h"
-#include <iostream>
 
-Queen::Queen() : Ant(sf::Vector2f(100,100), 0, 6, 1), colony(NULL)
+Queen::Queen(int n) : Ant(sf::Vector2f(100,100), n, 0, 6, 1), colony(NULL)
 {
 
 }
 
-Queen::Queen(sf::Vector2f p, int a, int s, int sp) : Ant(p, a, s, sp), colony(NULL)
+Queen::Queen(sf::Vector2f p, int n, int a, int s, int sp) : Ant(p, n, a, s, sp), colony(NULL)
 {
 
 }
 
 Queen::Queen(const Queen & q)
 {
+	this->number = q.number;
 	this->age = q.age;
 	this->size = q.size;
 	this->speed = q.speed;

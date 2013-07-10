@@ -16,9 +16,9 @@ class Queen: public Ant {
 private:
 	Colony* colony;
 public:
-	Queen();
-	Queen(sf::Vector2f p, int a, int s, int sp);
-	Queen( const Queen & q);
+	Queen(int number);
+	Queen(sf::Vector2f p, int number, int a, int s, int sp);
+	Queen(const Queen & q);
 	virtual ~Queen();
 
 	Colony createColony(int width, int height, int capacity);

@@ -8,7 +8,7 @@
 #include "Colony.h"
 
 Colony::Colony() :
-	width(15), height(15), capacity(10), shape(sf::RectangleShape(sf::Vector2f(width, height))), queen(new Queen())
+	width(15), height(15), capacity(10), shape(sf::RectangleShape(sf::Vector2f(width, height))), queen(NULL)
 {
 	shape.setFillColor(sf::Color::White);
 	shape.setPosition(sf::Vector2f(50, 50));

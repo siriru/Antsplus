@@ -8,67 +8,56 @@
 
 #include <iostream>
 using namespace std;
+#include "Manager.h"
 #include "Ant.h"
 #include "Queen.h"
 #include "Colony.h"
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
-#include <vector>
 
 int main()
 {
     RenderWindow window(VideoMode(800,600,32), "Ants");
-    Colony colony;
-    Colony colony2;
-    Queen q(Vector2f(100,100), 1, 6, 1);
-    Queen q2(Vector2f(250,100), 1, 6, 1);
-    colony = q.createColony(30, 20, 10);
-    q.setPosition(Vector2f(500,500));
-    colony2 = q.createColony(50, 20, 20);
-    /*vector<Ant*> tabAnt(0);
-    for(int i=0;i<10;i++) {
-    	tabAnt.push_back(new Ant(Vector2f(100+10*i,100+i*2), 0, 3, 1));
-    }
-    Ant ant(Vector2f(100,100), 0, 3, 1);*/
+    Manager manager;
+    Queen q(Vector2f(100,100), 1, 1, 6, 1);
+    Queen q2(Vector2f(102,102), 2, 1, 6, 1);
+    Ant a(Vector2f(200,200), 1, 1, 3, 1);
+    manager.addAnt(&q);
+    manager.addAnt(&q2);
+    manager.addAnt(&a);
+    //colony = q.createColony(30, 30, 10);
+    //q.setPosition(Vector2f(500,500));
+    //colony2 = q.createColony(50, 50, 20);
     window.setFramerateLimit(60);
 
     while (window.isOpen())
     {
+    	window.clear();
         Event event;
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed)
                 window.close();
 
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            if (Mouse::isButtonPressed(Mouse::Left))
             {
-            	sf::Vector2f localPosition = sf::Vector2f((float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
-            	if(localPosition.x >= colony.getPosition().x && localPosition.x <= colony.getPosition().x + colony.getWidth()
-            			&& localPosition.y >= colony.getPosition().y && localPosition.y <= colony.getPosition().y + colony.getHeight()) {
-					cout << "true" << endl;
-            	}
-            	else cout << "false" << endl;
-            	colony.getQueen()->setPosition(localPosition);
+            	manager.selectionEvent(Mouse::getPosition(window));
             }
         }
 
-        window.clear();
-        window.draw(colony.getShape());
-        window.draw(colony2.getShape());
-        window.draw(q.getShape());
-        window.draw(q2.getShape());
-
-        if(colony.getQueen()->getPosition().x == 100) {
-        	cout << "changement de reine" << endl;
-        	colony.setQueen(&q2);
+        for(unsigned int i=0; i<manager.getAnts().size();i++) {
+        	Ant* a = manager.getAnts().at(i);
+        	window.draw(a->getShape());
+        	if(a->isSelected()) {
+        		RectangleShape selection(Vector2f(a->getSize() + 4, a->getSize() + 4));
+				selection.setPosition(Vector2f(a->getPosition().x - 2.0, a->getPosition().y - 2.0));
+				selection.setFillColor(Color::Transparent);
+				selection.setOutlineThickness(1);
+				selection.setOutlineColor(Color::White);
+				window.draw(selection);
+        	}
         }
-        /*for(unsigned int i=0;i<tabAnt.size();i++) {
-        	tabAnt[i]->move();
-        }
-        for(unsigned int i=0;i<tabAnt.size();i++) {
-        	window.draw(tabAnt[i]->getShape());
-		}*/
 
         window.display();
     }
