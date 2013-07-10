@@ -11,27 +11,26 @@
 #include <SFML/Graphics.hpp>
 
 class Ant {
-	private:
-		int age, size, speed;
-		sf::RectangleShape shape;
+protected:
+	int age, size, speed;
+	sf::RectangleShape shape;
 
+public:
+	Ant();
+	Ant(sf::Vector2f p, int a, int s, int sp);
+	virtual ~Ant();
 
-	public:
-		Ant();
-		Ant(sf::Vector2f position, int age, int size, int speed);
-		virtual ~Ant();
+	int getAge() const;
+	void setAge(int a);
+	int getSize() const;
+	void setSize(int s);
+	int getSpeed() const;
+	void setSpeed(int sp);
+	sf::Vector2f getPosition() const;
+	void setPosition(sf::Vector2f p);
+	virtual sf::RectangleShape getShape() const;
 
-		int getAge() const;
-		void setAge(int age);
-		int getSize() const;
-		void setSize(int size);
-		int getSpeed() const;
-		void setSpeed(int speed);
-		sf::Vector2f getPosition() const;
-		void setPosition(sf::Vector2f position);
-		sf::RectangleShape getShape() const;
-
-		void move();
+	void move();
 };
 
 #endif /* ANT_H_ */

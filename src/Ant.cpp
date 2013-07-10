@@ -7,24 +7,17 @@
 
 #include "Ant.h"
 #include <iostream>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
 
-Ant::Ant()
+Ant::Ant() : age(0), size(3), speed(1), shape(sf::RectangleShape(sf::Vector2f(size, size)))
 {
-	this->speed = 1;
-	this->size = 1;
-	this->age = 0;
+	shape.setFillColor(sf::Color::White);
+	shape.setPosition(sf::Vector2f(0, 0));
 }
 
-Ant::Ant(sf::Vector2f position, int age, int size, int speed)
+Ant::Ant(sf::Vector2f p, int a, int s, int sp) : age(a), size(s), speed(sp), shape(sf::RectangleShape(sf::Vector2f(s, s)))
 {
-	this->size = size;
-	this->speed = speed;
-	this->age = age;
-	this->shape = sf::RectangleShape(sf::Vector2f(this->size, this->size));
-	this->shape.setFillColor(sf::Color::White);
-	this->shape.setPosition(position);
+	shape.setFillColor(sf::Color::White);
+	shape.setPosition(p);
 }
 
 Ant::~Ant()
@@ -34,56 +27,48 @@ Ant::~Ant()
 
 int Ant::getAge() const
 {
-	return this->age;
+	return age;
 }
-void Ant::setAge(int age)
+void Ant::setAge(int a)
 {
-	this->age = age;
+	age = a;
 }
 
 int Ant::getSize() const
 {
-	return this->size;
+	return size;
 }
-void Ant::setSize(int size)
+void Ant::setSize(int s)
 {
-	this->size = size;
+	size = s;
 }
 
 int Ant::getSpeed() const
 {
-	return this->speed;
+	return speed;
 }
-void Ant::setSpeed(int speed)
+void Ant::setSpeed(int sp)
 {
-	this->speed = speed;
+	speed = sp;
 }
 
 sf::Vector2f Ant::getPosition() const
 {
-	return this->shape.getPosition();
+	return shape.getPosition();
 }
-void Ant::setPosition(sf::Vector2f position)
+void Ant::setPosition(sf::Vector2f p)
 {
-	this->shape.setPosition(position);
+	shape.setPosition(p);
 }
 
 sf::RectangleShape Ant::getShape() const
 {
-	return this->shape;
+	return shape;
 }
 
 void Ant::move()
 {
-	srand (time(NULL));
 	sf::Vector2f to;
-	sf::Vector2f from = this->getPosition();
-	double randx = rand() % 2 + (-1);
-	sleep(1000);
-	double randy = rand() % 2 + (-1);
-	sleep(1000);
-	std::cout << randx << std::endl;
-	to.x = from.x + randx;
-	to.y = from.y + randy;
-	this->setPosition(to);
+	//sf::Vector2f from = getPosition();
+	setPosition(to);
 }
