@@ -8,38 +8,28 @@
 #ifndef COLONY_H_
 #define COLONY_H_
 
-#include <SFML/Graphics.hpp>
+#include "Element.h"
 #include "Queen.h"
 
 class Queen;
-class Colony {
+class Colony: public Element {
 private:
-	int width, height, capacity;
-	sf::RectangleShape shape;
+	int capacity;
 	Queen *queen;
 
 public:
 	Colony();
-	Colony(sf::Vector2f p, int w, int h, int c, Queen &queen);
-	Colony(Colony const & c);
+	Colony(sf::Vector2f position, int width, int height, int capacity, Queen &queen);
+	Colony(Colony const & colony);
 	virtual ~Colony();
 
 	int getCapacity() const;
-	void setCapacity(int c);
-
-	sf::Vector2f getPosition() const;
-	void setPosition (sf::Vector2f p);
-
-	int getHeight() const;
-	void setHeight(int height);
-
-	int getWidth() const;
-	void setWidth(int width);
-
-	sf::RectangleShape getShape() const;
+	void setCapacity(int capacity);
 
 	Queen* getQueen() const;
 	void setQueen(Queen* queen);
+
+	Colony& operator=(Colony const& colony);
 };
 
 #endif /* COLONY_H_ */

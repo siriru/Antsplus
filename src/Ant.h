@@ -9,35 +9,32 @@
 #define ANT_H_
 
 #include <SFML/Graphics.hpp>
+#include "Element.h"
 
-class Ant {
-protected:
-	int number, age, size, speed;
-	bool selected;
-	sf::RectangleShape shape;
+class Ant: public Element
+{
+	protected:
+		sf::Vector2f destination;
+		int number, age, speed;
 
-public:
-	Ant();
-	Ant(int number);
-	Ant(sf::Vector2f p, int number, int age, int size, int speed);
-	Ant(const Ant & a);
-	virtual ~Ant();
+	public:
+		Ant();
+		Ant(int number);
+		Ant(sf::Vector2f position, int number, int age, int width, int height, int speed);
+		Ant(const Ant & ant);
+		virtual ~Ant();
 
-	int getAge() const;
-	void setAge(int a);
-	int getSize() const;
-	void setSize(int s);
-	int getSpeed() const;
-	void setSpeed(int sp);
-	sf::Vector2f getPosition() const;
-	void setPosition(sf::Vector2f p);
-	virtual sf::RectangleShape getShape() const;
-	int getNumber() const;
-	void setNumber(int number);
-	bool isSelected() const;
-	void setSelected(bool selected);
+		sf::Vector2f getDestination() const;
+		void setDestination(sf::Vector2f destination);
 
-	void move();
+		int getAge() const;
+		void setAge(int age);
+		int getSpeed() const;
+		void setSpeed(int speed);
+		int getNumber() const;
+		void setNumber(int number);
+
+		Ant& operator=(Ant const& ant);
 };
 
 #endif /* ANT_H_ */

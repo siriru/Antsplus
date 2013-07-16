@@ -8,38 +8,36 @@
 #include "Ant.h"
 #include <iostream>
 
-Ant::Ant() : number(0), age(0), size(3), speed(1), selected(false), shape(sf::RectangleShape(sf::Vector2f(size, size)))
+Ant::Ant() : Element(sf::Vector2f(0,0), 3, 3, false), destination(sf::Vector2f(0,0)), number(0), age(0), speed(1)
 {
 
 }
 
-Ant::Ant(int n) : number(n), age(0), size(3), speed(1), selected(false), shape(sf::RectangleShape(sf::Vector2f(size, size)))
+Ant::Ant(int n) : Element(sf::Vector2f(0,0), 3, 3, false), destination(sf::Vector2f(0,0)), number(n), age(0), speed(1)
 {
-	shape.setFillColor(sf::Color::White);
-	shape.setPosition(sf::Vector2f(0, 0));
+
 }
 
-Ant::Ant(sf::Vector2f p, int n, int a, int s, int sp) : number(n), age(a), size(s), speed(sp), selected(false), shape(sf::RectangleShape(sf::Vector2f(s, s)))
+Ant::Ant(sf::Vector2f p, int n, int a, int w, int h, int sp) : Element(p, w, h, false), destination(p), number(n), age(a), speed(sp)
 {
-	shape.setFillColor(sf::Color::White);
-	shape.setPosition(p);
+
 }
 
-Ant::Ant(const Ant & a)
+Ant::Ant(const Ant & a) : Element(a), destination(a.destination), number(a.number), age(a.age), speed(a.speed)
 {
-	this->number = a.number;
-	this->age = a.age;
-	this->size = a.size;
-	this->speed = a.speed;
-	this->selected = false;
-	this->shape = a.shape;
-	this->shape.setFillColor(sf::Color::White);
-	this->shape.setPosition(a.shape.getPosition());
+
 }
 
 Ant::~Ant()
 {
 
+}
+
+sf::Vector2f Ant::getDestination() const {
+	return destination;
+}
+void Ant::setDestination(sf::Vector2f destination) {
+	this->destination = destination;
 }
 
 int Ant::getAge() const
@@ -51,15 +49,6 @@ void Ant::setAge(int a)
 	age = a;
 }
 
-int Ant::getSize() const
-{
-	return size;
-}
-void Ant::setSize(int s)
-{
-	size = s;
-}
-
 int Ant::getSpeed() const
 {
 	return speed;
@@ -67,20 +56,6 @@ int Ant::getSpeed() const
 void Ant::setSpeed(int sp)
 {
 	speed = sp;
-}
-
-sf::Vector2f Ant::getPosition() const
-{
-	return shape.getPosition();
-}
-void Ant::setPosition(sf::Vector2f p)
-{
-	shape.setPosition(p);
-}
-
-sf::RectangleShape Ant::getShape() const
-{
-	return shape;
 }
 
 int Ant::getNumber() const {
@@ -91,17 +66,19 @@ void Ant::setNumber(int number) {
 	this->number = number;
 }
 
-bool Ant::isSelected() const {
-	return selected;
-}
-
-void Ant::setSelected(bool selected) {
-	this->selected = selected;
-}
-
-void Ant::move()
+Ant& Ant::operator=(Ant const& a)
 {
-	sf::Vector2f to;
-	//sf::Vector2f from = getPosition();
-	setPosition(to);
+	if(this != &a)
+	//On vérifie que l'objet n'est pas le même que celui reçu en argument
+	{
+		this->position = a.position;
+		this->destination = a.destination;
+		this->number = a.number;
+		this->age = a.age;
+		this->width = a.width;
+		this->height = a.height;
+		this->speed = a.speed;
+		this->selected = false;
+	}
+	return *this; //On renvoie l'objet lui-même
 }

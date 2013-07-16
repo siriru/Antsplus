@@ -7,26 +7,19 @@
 
 #include "Queen.h"
 
-Queen::Queen(int n) : Ant(sf::Vector2f(100,100), n, 0, 6, 1), colony(NULL)
+Queen::Queen(int number) : Ant(number), colony(NULL)
 {
 
 }
 
-Queen::Queen(sf::Vector2f p, int n, int a, int s, int sp) : Ant(p, n, a, s, sp), colony(NULL)
+Queen::Queen(sf::Vector2f p, int n, int a, int w, int h, int sp) : Ant(p, n, a, w, h, sp), colony(NULL)
 {
 
 }
 
-Queen::Queen(const Queen & q)
+Queen::Queen(const Queen & q) : Ant(q)
 {
-	this->number = q.number;
-	this->age = q.age;
-	this->size = q.size;
-	this->speed = q.speed;
-	this->shape = q.shape;
-	this->colony = q.colony;
-	this->shape.setFillColor(sf::Color::White);
-	this->shape.setPosition(q.shape.getPosition());
+	this->colony = new Colony(*(q.colony));
 }
 
 Queen::~Queen()
@@ -36,10 +29,10 @@ Queen::~Queen()
 
 Colony Queen::createColony(int width, int height, int capacity)
 {
-	float x = this->shape.getPosition().x + 1.0;
-	float y = this->shape.getPosition().y + 1.0;
-	Colony* previousColony = this->getColony();
-	if(previousColony != 0) previousColony->setQueen(0);
+	float x = this->position.x + 1.0;
+	float y = this->position.y + 1.0;
+	//Colony* previousColony = this->getColony();
+	//if(previousColony != 0) previousColony->setQueen(0);
 	Colony colony(sf::Vector2f(x,y), width, height, capacity, *this);
 	this->setColony(&colony);
 	return colony;
@@ -52,4 +45,24 @@ Colony* Queen::getColony()
 void Queen::setColony(Colony* colony)
 {
 	this->colony = colony;
+}
+
+Queen& Queen::operator=(Queen const& q)
+{
+    if(this != &q)
+    //On vérifie que l'objet n'est pas le même que celui reçu en argument
+    {
+    	this->position = q.position;
+    	this->destination = q.destination;
+    	this->number = q.number;
+		this->age = q.age;
+		this->width = q.width;
+		this->height = q.height;
+		this->speed = q.speed;
+		this->colony = q.colony;
+
+		delete this->colony;
+		this->colony = new Colony(*(q.colony));
+    }
+    return *this; //On renvoie l'objet lui-même
 }
